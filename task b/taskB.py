@@ -92,12 +92,11 @@ option1Money8Shape = visual.ShapeStim(win, fillColor=[1,1,1],
 option1Money9Shape = visual.ShapeStim(win, fillColor=[1,1,1],
     vertices=[((-(d/2 + 156+d+156), -(d+156/2+156)), ((-(d/2 + 156+d+156), -(d+156/2)), (-(d/2 + 156+d), -(d+156/2)), (-(d/2 + 156+d), -(d + 156/2 + 156))], opacity = 0)
 option1Money10Shape = visual.ShapeStim(win, fillColor=[1,1,1],
-    vertices=[((-(d/2 + 156), -(d+156/2+156)), ((-(d/2 + 156), -(d+156/2)), (-(d/2), -(d+156/2)), (-(d/2), -(d+156/2+156))], opacity = 0)
+    vertices=[((-(d/2 + 156), -(d+156/2+156)), ((-(d/2 + 156)), -(d+156/2)), (-(d/2), -(d+156/2)), (-(d/2), -(d+156/2+156))], opacity = 0)
 option1Money11Shape = visual.ShapeStim(win, fillColor=[1,1,1],
     vertices=[(((d/2), -(d+156/2+156)), (((d/2), -(d+156/2)), ((d/2 + 156), -(d+156/2)), ((d/2 + 156), -(d+156/2+156))], opacity = 0)
 option1Money12Shape = visual.ShapeStim(win, fillColor=[1,1,1],
     vertices=[(((d/2 + 156+d), -(d+156/2+156)), (((d/2 + 156+d), -(d+156/2)), ((d/2 + 156+d+156), -(d+156/2)), ((d/2 + 156+d+156), -(d+156/2+156))], opacity = 0)
-
 
 ## Coordinates for ImageStims, origin = (0,0)
 xInner = (d/2 + 160/2)
@@ -123,37 +122,29 @@ option2Item12 = visual.ImageStim(win=win, image=imageList[0][0], units='pix', po
 ## Subejct's selected image
 postChoiceItem = visual.ImageStim(win=win, image=imageList[0][0], units='pix', pos=[0,0], size = [156,156])
 
-
-option2Item1Border = visual.ShapeStim(win, fillColor=[1,1,1],
-    vertices=[((d/2 + 156), -156/2), ((d/2 + 156), 156/2), (d/2, 156/2), (d/2, -156/2)], opacity = 0)
-
 # Choice 1 Loop
 timer.reset()
 while timer.getTime() < 4:
     print (timer.getTime())
     ## Monetary Option Chosen
     if mouse.isPressedIn(option1MoneyShape):
-        rt1 = timer.getTime()
+        choice1ReactionTimes[i] = timer.getTime()
         option1Money.setBorderColor('red')
         option1Money.draw()
         option1Items.draw()
         win.flip()
         core.wait(1)
-        resp1 = option1Money.getDisplayedText()
-        print('money')
-        print(rt1)
+        choice1Responses[i] = option1Money.getDisplayedText()
         break
     ## Choice option Chosen
     elif mouse.isPressedIn(option1ItemsShape):
-        rt1 = timer.getTime()
+        choice1ReactionTimes[i] = timer.getTime()
         option1Items.setBorderColor('red')
         option1Items.draw()
         option1Money.draw()
         win.flip()
         core.wait(1)
-        resp1 = option1Items.getDisplayedText()
-        print('items')
-        print(rt1)
+        choice1Responses[i] = option1Items.getDisplayedText()
         break
     option1Money.draw()
     option1MoneyShape.draw()
@@ -162,9 +153,9 @@ while timer.getTime() < 4:
     win.flip()
 
 # Exit current trial and begin new one if did not answer in time
-if resp1 == '':
-    resp1 = 'None'
-    rt1 = 'None'
+if choice1Responses[i] == '':
+    choice1Responses[i] = 'None'
+    choice1ReactionTimes[i] = 'None'
     resp2 = 'None'
     rt2 = 'None'
     try_faster_screen = visual.TextStim(win, text='Please make a faster decision next round!')
@@ -175,7 +166,7 @@ if resp1 == '':
     core.wait(3)
 
 # Delay 1. Select 5 or 6 second delay
-while timer.getTime() < 6:
+while timer.getTime() < 5:
     #print(timer.getTime())
     win.flip()
 
@@ -184,7 +175,7 @@ imageType = random.randint(0, 1)
 numberUniquePics = int(option1Items.getDisplayedText())
 timesImageRepeated = 12 / numberUniquePics
 
-if trials[0] == 1: # Check if want high preference images
+if trials[0] == 1: # Check if trial requires high preference images
     uniquePics = random.sample(imageList[imageType], numberUniquePics)
 else: # Select low preference images
     uniquePics = random.sample(imageList[imageType + 2], numberUniquePics)
@@ -206,17 +197,18 @@ option2Item11.setImage(trialPics[10])
 option2Item12.setImage(trialPics[11])
 
 # Choice 2
-if resp1 == option1Money.getDisplayedText():
+if choice1Responses[i] == option1Money.getDisplayedText():
     timer.reset()
     #while timer.getTime() < 5:
     print(option1Money.getDisplayedText())
-elif resp1 == option1Items.getDisplayedText(): # use int("String") to use the number of items as int
+else  # Subject chose item option
     timer.reset()
     while timer.getTime() < 5:
         ## item1 Chosen
         if mouse.isPressedIn(option2Item1):
-            choice2ReactionTimes = timer.getTime() ## record reaction time
+            choice2ReactionTimes[i] = timer.getTime() ## record reaction time
             option2Item1Shape.setBorderColor('red')
+            option2Item1Shape.draw()
             option2Item1.draw()
             option2Item2.draw()
             option2Item3.draw()
@@ -231,13 +223,12 @@ elif resp1 == option1Items.getDisplayedText(): # use int("String") to use the nu
             option2Item12.draw()
             win.flip()
             core.wait(1)
-            choice2Responses = trialPics[0]
-            print(trialPics[0])
-            print(rt2)
+            choice2Responses[i] = trialPics[0]
             break
         elif mouse.isPressedIn(option2Item2):
-            choice2ReactionTimes = timer.getTime() ## record reaction time
+            choice2ReactionTimes[i] = timer.getTime() ## record reaction time
             option2Item2Shape.setBorderColor('red')
+            option2Item2Shape.draw()
             option2Item1.draw()
             option2Item2.draw()
             option2Item3.draw()
@@ -252,13 +243,12 @@ elif resp1 == option1Items.getDisplayedText(): # use int("String") to use the nu
             option2Item12.draw()
             win.flip()
             core.wait(1)
-            choice2Responses = trialPics[1]
-            print(trialPics[1])
-            print(rt2)
+            choice2Responses[i] = trialPics[1]
             break
         elif mouse.isPressedIn(option2Item3):
-            choice2ReactionTimes = timer.getTime() ## record reaction time
+            choice2ReactionTimes[i] = timer.getTime() ## record reaction time
             option2Item3Shape.setBorderColor('red')
+            option2Item3Shape.draw()
             option2Item1.draw()
             option2Item2.draw()
             option2Item3.draw()
@@ -273,13 +263,12 @@ elif resp1 == option1Items.getDisplayedText(): # use int("String") to use the nu
             option2Item12.draw()
             win.flip()
             core.wait(1)
-            choice2Responses = trialPics[2]
-            print(trialPics[2])
-            print(rt2)
+            choice2Responses[i] = trialPics[2]
             break
         elif mouse.isPressedIn(option2Item4):
-            choice2ReactionTimes = timer.getTime() ## record reaction time
+            choice2ReactionTimes[i] = timer.getTime() ## record reaction time
             option2Item4Shape.setBorderColor('red')
+            option2Item4Shape.draw()
             option2Item1.draw()
             option2Item2.draw()
             option2Item3.draw()
@@ -294,13 +283,12 @@ elif resp1 == option1Items.getDisplayedText(): # use int("String") to use the nu
             option2Item12.draw()
             win.flip()
             core.wait(1)
-            choice2Responses = trialPics[3]
-            print(trialPics[3])
-            print(rt2)
+            choice2Responses[i] = trialPics[3]
             break
         elif mouse.isPressedIn(option2Item5):
-            choice2ReactionTimes = timer.getTime() ## record reaction time
+            choice2ReactionTimes[i] = timer.getTime() ## record reaction time
             option2Item5Shape.setBorderColor('red')
+            option2Item5Shape.draw()
             option2Item1.draw()
             option2Item2.draw()
             option2Item3.draw()
@@ -315,13 +303,12 @@ elif resp1 == option1Items.getDisplayedText(): # use int("String") to use the nu
             option2Item12.draw()
             win.flip()
             core.wait(1)
-            choice2Responses = trialPics[4]
-            print(trialPics[4])
-            print(rt2)
+            choice2Responses[i] = trialPics[4]
             break
         elif mouse.isPressedIn(option2Item6):
-            choice2ReactionTimes = timer.getTime() ## record reaction time
+            choice2ReactionTimes[i] = timer.getTime() ## record reaction time
             option2Item6Shape.setBorderColor('red')
+            option2Item6Shape.draw()
             option2Item1.draw()
             option2Item2.draw()
             option2Item3.draw()
@@ -336,13 +323,12 @@ elif resp1 == option1Items.getDisplayedText(): # use int("String") to use the nu
             option2Item12.draw()
             win.flip()
             core.wait(1)
-            choice2Responses = trialPics[5]
-            print(trialPics[5])
-            print(rt2)
+            choice2Responses[i] = trialPics[5]
             break
         elif mouse.isPressedIn(option2Item7):
-            rt2 = timer.getTime() ## record reaction time
+            choice2ReactionTimes[i] = timer.getTime() ## record reaction time
             option2Item7Shape.setBorderColor('red')
+            option2Item7Shape.draw()
             option2Item1.draw()
             option2Item2.draw()
             option2Item3.draw()
@@ -357,13 +343,12 @@ elif resp1 == option1Items.getDisplayedText(): # use int("String") to use the nu
             option2Item12.draw()
             win.flip()
             core.wait(1)
-            resp2 = trialPics[6]
-            print(trialPics[6])
-            print(rt2)
+            choice2Responses[i] = trialPics[6]
             break
         elif mouse.isPressedIn(option2Item8):
-            rt2 = timer.getTime() ## record reaction time
+            choice2ReactionTimes[i] = timer.getTime() ## record reaction time
             option2Item8Shape.setBorderColor('red')
+            option2Item8Shape.draw()
             option2Item1.draw()
             option2Item2.draw()
             option2Item3.draw()
@@ -378,13 +363,12 @@ elif resp1 == option1Items.getDisplayedText(): # use int("String") to use the nu
             option2Item12.draw()
             win.flip()
             core.wait(1)
-            resp2 = trialPics[7]
-            print(trialPics[7])
-            print(rt2)
+            choice2Responses[i] = trialPics[7]
             break
         elif mouse.isPressedIn(option2Item9):
-            rt2 = timer.getTime() ## record reaction time
+            choice2ReactionTimes[i] = timer.getTime() ## record reaction time
             option2Item9Shape.setBorderColor('red')
+            option2Item9Shape.draw()
             option2Item1.draw()
             option2Item2.draw()
             option2Item3.draw()
@@ -399,13 +383,12 @@ elif resp1 == option1Items.getDisplayedText(): # use int("String") to use the nu
             option2Item12.draw()
             win.flip()
             core.wait(1)
-            resp2 = trialPics[8]
-            print(trialPics[8])
-            print(rt2)
+            choice2Responses[i] = trialPics[8]
             break
         elif mouse.isPressedIn(option2Item10):
-            rt2 = timer.getTime() ## record reaction time
+            choice2ReactionTimes[i] = timer.getTime() ## record reaction time
             option2Item10Shape.setBorderColor('red')
+            option2Item10Shape.draw()
             option2Item1.draw()
             option2Item2.draw()
             option2Item3.draw()
@@ -420,13 +403,12 @@ elif resp1 == option1Items.getDisplayedText(): # use int("String") to use the nu
             option2Item12.draw()
             win.flip()
             core.wait(1)
-            resp2 = trialPics[9]
-            print(trialPics[9])
-            print(rt2)
+            choice2Responses[i] = trialPics[9]
             break
         elif mouse.isPressedIn(option2Item11):
-            rt2 = timer.getTime() ## record reaction time
+            choice2ReactionTimes[i] = timer.getTime() ## record reaction time
             option2Item11Shape.setBorderColor('red')
+            option2Item11Shape.draw()
             option2Item1.draw()
             option2Item2.draw()
             option2Item3.draw()
@@ -441,13 +423,12 @@ elif resp1 == option1Items.getDisplayedText(): # use int("String") to use the nu
             option2Item12.draw()
             win.flip()
             core.wait(1)
-            resp2 = trialPics[10]
-            print(trialPics[10])
-            print(rt2)
+            choice2Responses[i] = trialPics[10]
             break
         elif mouse.isPressedIn(option2Item12):
-            rt2 = timer.getTime() ## record reaction time
+            choice2ReactionTimes[i] = timer.getTime() ## record reaction time
             option2Item12Shape.setBorderColor('red')
+            option2Item12Shape.draw()
             option2Item1.draw()
             option2Item2.draw()
             option2Item3.draw()
@@ -462,9 +443,7 @@ elif resp1 == option1Items.getDisplayedText(): # use int("String") to use the nu
             option2Item12.draw()
             win.flip()
             core.wait(1)
-            resp2 = trialPics[11]
-            print(trialPics[11])
-            print(rt2)
+            choice2Responses[i] = trialPics[11]
             break
         #draw boxes behind
         option2Item1.draw()
