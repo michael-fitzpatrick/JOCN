@@ -70,8 +70,14 @@ option1MoneyShape = visual.ShapeStim(win, fillColor=[1,1,1],
     vertices=[((-(d/2 + 156+d+156), d+156/2), ((-(d/2 + 156+d+156), d+156/2+156), (-(d/2 + 156+d), d+156/2+156), (-(d/2 + 156+d), d+156/2)], opacity = 0)
 option2MoneyShape = visual.ShapeStim(win, fillColor=[1,1,1],
     vertices=[((-(d/2 + 156), d+156/2), ((-(d/2 + 156), d+156/2+156), (-(d/2), d+156/2+156), (-(d/2), d+156/2)], opacity = 0)
-option2MoneyShape = visual.ShapeStim(win, fillColor=[1,1,1],
-    vertices=[((-(d/2 + 156), d+156/2), ((-(d/2 + 156), d+156/2+156), (-(d/2), d+156/2+156), (-(d/2), d+156/2)], opacity = 0)
+option3MoneyShape = visual.ShapeStim(win, fillColor=[1,1,1],
+    vertices=[(((d/2), d+156/2), (((d/2), d+156/2+156), ((d/2 + 156), d+156/2+156), ((d/2 + 156), d+156/2)], opacity = 0)
+option4MoneyShape = visual.ShapeStim(win, fillColor=[1,1,1],
+    vertices=[(((d/2 + 156+d), d+156/2), (((d/2 + 156+d), d+156/2+156), ((d/2 + 156+d+156), d+156/2+156), ((d/2 + 156+d+156), d+156/2)], opacity = 0)
+option5MoneyShape = visual.ShapeStim(win, fillColor=[1,1,1],
+    vertices=[((-(d/2 + 156+d+156), -156/2), ((-(d/2 + 156+d+156), 156/2), (-(d/2 + 156+d), 156/2), (-(d/2 + 156+d), -156/2)], opacity = 0)
+option6MoneyShape = visual.ShapeStim(win, fillColor=[1,1,1],
+    vertices=[(((d/2 ), -156/2), (((d/2 + 156), 156/2), ((d/2), 156/2), ((d/2), -156/2)], opacity = 0)
 
 ## Coordinates for ImageStims, origin = (0,0)
 xInner = (d/2 + 160/2)
