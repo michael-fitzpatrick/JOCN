@@ -60,24 +60,44 @@ option1Items=visual.TextBox(window=win,
                          )
 
 # Target Boxes #
+##  Overlaying these on the textbox stim because visual textboxs do not
+##  have the .isPressedIn() method.
+
 ## First choice
 option1MoneyShape = visual.ShapeStim(win, fillColor=[1,1,1],
     vertices=[(-(d/2 + 156), -156/2), (-(d/2 + 156), 156/2), (-d/2, 156/2), (-d/2, -156/2)], opacity = 0)
 option1ItemsShape = visual.ShapeStim(win, fillColor=[1,1,1],
     vertices=[((d/2 + 156), -156/2), ((d/2 + 156), 156/2), (d/2, 156/2), (d/2, -156/2)], opacity = 0)
+
 ## Second choice
-option1MoneyShape = visual.ShapeStim(win, fillColor=[1,1,1],
+## Top - left to right
+option1Money1Shape = visual.ShapeStim(win, fillColor=[1,1,1],
     vertices=[((-(d/2 + 156+d+156), d+156/2), ((-(d/2 + 156+d+156), d+156/2+156), (-(d/2 + 156+d), d+156/2+156), (-(d/2 + 156+d), d+156/2)], opacity = 0)
-option2MoneyShape = visual.ShapeStim(win, fillColor=[1,1,1],
+option1Money2Shape = visual.ShapeStim(win, fillColor=[1,1,1],
     vertices=[((-(d/2 + 156), d+156/2), ((-(d/2 + 156), d+156/2+156), (-(d/2), d+156/2+156), (-(d/2), d+156/2)], opacity = 0)
-option3MoneyShape = visual.ShapeStim(win, fillColor=[1,1,1],
+option1Money3Shape = visual.ShapeStim(win, fillColor=[1,1,1],
     vertices=[(((d/2), d+156/2), (((d/2), d+156/2+156), ((d/2 + 156), d+156/2+156), ((d/2 + 156), d+156/2)], opacity = 0)
-option4MoneyShape = visual.ShapeStim(win, fillColor=[1,1,1],
+option1Money4Shape = visual.ShapeStim(win, fillColor=[1,1,1],
     vertices=[(((d/2 + 156+d), d+156/2), (((d/2 + 156+d), d+156/2+156), ((d/2 + 156+d+156), d+156/2+156), ((d/2 + 156+d+156), d+156/2)], opacity = 0)
-option5MoneyShape = visual.ShapeStim(win, fillColor=[1,1,1],
+## Middle
+option1Money5Shape = visual.ShapeStim(win, fillColor=[1,1,1],
     vertices=[((-(d/2 + 156+d+156), -156/2), ((-(d/2 + 156+d+156), 156/2), (-(d/2 + 156+d), 156/2), (-(d/2 + 156+d), -156/2)], opacity = 0)
-option6MoneyShape = visual.ShapeStim(win, fillColor=[1,1,1],
-    vertices=[(((d/2 ), -156/2), (((d/2 + 156), 156/2), ((d/2), 156/2), ((d/2), -156/2)], opacity = 0)
+option1Money6Shape = visual.ShapeStim(win, fillColor=[1,1,1],
+    vertices=[((-(d/2 + 156), -156/2), ((-(d/2 + 156), 156/2), (-(d/2), 156/2), (-(d/2), -156/2)], opacity = 0)
+option1Money7Shape = visual.ShapeStim(win, fillColor=[1,1,1],
+    vertices=[(((d/2), -156/2), (((d/2), 156/2), ((d/2 + 156), 156/2), ((d/2 + 156), -156/2)], opacity = 0)
+option1Money8Shape = visual.ShapeStim(win, fillColor=[1,1,1],
+    vertices=[(((d/2 + 156+d), -156/2), (((d/2 + 156+d), 156/2), ((d/2 + 156+d+156), 156/2), ((d/2 + 156+d+156), -156/2)], opacity = 0)
+## Bottom
+option1Money9Shape = visual.ShapeStim(win, fillColor=[1,1,1],
+    vertices=[((-(d/2 + 156+d+156), -(d+156/2+156)), ((-(d/2 + 156+d+156), -(d+156/2)), (-(d/2 + 156+d), -(d+156/2)), (-(d/2 + 156+d), -(d + 156/2 + 156))], opacity = 0)
+option1Money10Shape = visual.ShapeStim(win, fillColor=[1,1,1],
+    vertices=[((-(d/2 + 156), -(d+156/2+156)), ((-(d/2 + 156), -(d+156/2)), (-(d/2), -(d+156/2)), (-(d/2), -(d+156/2+156))], opacity = 0)
+option1Money11Shape = visual.ShapeStim(win, fillColor=[1,1,1],
+    vertices=[(((d/2), -(d+156/2+156)), (((d/2), -(d+156/2)), ((d/2 + 156), -(d+156/2)), ((d/2 + 156), -(d+156/2+156))], opacity = 0)
+option1Money12Shape = visual.ShapeStim(win, fillColor=[1,1,1],
+    vertices=[(((d/2 + 156+d), -(d+156/2+156)), (((d/2 + 156+d), -(d+156/2)), ((d/2 + 156+d+156), -(d+156/2)), ((d/2 + 156+d+156), -(d+156/2+156))], opacity = 0)
+
 
 ## Coordinates for ImageStims, origin = (0,0)
 xInner = (d/2 + 160/2)
