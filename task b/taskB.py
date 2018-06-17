@@ -330,7 +330,7 @@ postChoiceMoney=visual.TextBox(window=win,
                          border_stroke_width=4
                          )
 
-for i in range(2):
+for i in range(90):
     if event.getKeys(['escape']):
                 core.quit()
     # Set option offered in trial randomly from lists
@@ -343,7 +343,6 @@ for i in range(2):
     # Choice 1 Loop
     timer.reset()
     while timer.getTime() < 4:
-        print (timer.getTime())
         ## Monetary Option Chosen
         if mouse.isPressedIn(option1MoneyShape):
             choice1ReactionTimes[i] = timer.getTime()
@@ -1002,7 +1001,7 @@ for i in range(2):
     # Show Subject's choice
     timer.reset()
     if choice1Responses[i] == monetaryAmount:
-        while timer.getTime() < 2:
+        while timer.getTime() < 2: # JOCN duration: 2 seconds
             postChoiceMoney.setText(choice2Responses[i])
             postChoiceMoney.draw()
             win.flip()
@@ -1017,7 +1016,7 @@ for i in range(2):
     satisfactionScale.reset(); 
     event.clearEvents()
     timer.reset()
-    while timer.getTime() < 5:
+    while timer.getTime() < 3: # JOCN duration: 3 seconds
         if not satisfactionScale.noResponse:
             postChoiceReactionTimes[i] = timer.getTime()
             postChoiceResponses[i] = satisfactionScale.getRating()
@@ -1050,8 +1049,7 @@ f=open( outputFile,'w')
 if len(confed_id) > 0:
     f.write('Confederate: ' + confed_id + '\n')
 f.write('Trial Type, Money Option, Item Option, Trial Options, Choice 1, Choice 1 RT, Choice 2, Choice 2 RT, PostChoice, PostChoiceRT\n')
-for i in range(2):
-    # Remove filepath from imageList[i] string
+for i in range(90):
     print(trials[i])
     print(monetaryOptions[i])
     print(itemNumberOptions[i])
