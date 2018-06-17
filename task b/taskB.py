@@ -3,10 +3,10 @@ import random
 import glob, util
 
 # Initialization # taskB(subj_id, confed_id,
-subj_id = 't5'
-confed_id = 'Bob'
+subj_id = 'Test'
+confed_id = '' # Leave as '' to indicate no confederate 
 directory = os.getcwd()
-imageList = util.imageSorter('Matt2 task a results.csv')
+imageList = util.imageSorter('Matt2 task a results.csv') # Place subject's task a results here
 timer = core.Clock()
 win = visual.Window(fullscr=True, units='pix', monitor='testMonitor',
         color = [-.9,-.9,-.9])
@@ -31,7 +31,7 @@ choice2Responses = [''] * len(trials)
 choice2ReactionTimes = [''] * len(trials)
 postChoiceResponses = [''] * len(trials)
 postChoiceReactionTimes = [''] * len(trials)
-trialImages = [''] * len(trials)
+trialOptions = [''] * len(trials)
 
 # Rating Scale
 satisfactionScale = visual.RatingScale(win, name='satisfaction',
@@ -690,6 +690,7 @@ for i in range(2):
             option2Pos11Shape.draw()
             option2Pos12Shape.draw()
             win.flip()
+        trialOptions[i] = '$' + str(monetaryAmount)
     # Subject chose item option
     else:  
         # Setup random images to be used based on amount unique images to be shown
@@ -702,7 +703,7 @@ for i in range(2):
         else: # Select low preference images
             uniquePics = random.sample(imageList[imageType + 2], numberUniquePics) 
         
-        trialImages[i] = uniquePics
+        trialOptions[i] = uniquePics
         trialPics = uniquePics * timesImageRepeated
         random.shuffle(trialPics)
         
@@ -1040,24 +1041,28 @@ for i in range(2):
 
 # Display rating scale and store result as resp3.
 # Put this in a for trial in trials loop.
-
+if confed_id == '':
+    outputFile = 'Subject_' + subj_id + '_task_b_results.csv'
+else: 
+    outputFile = 'Subject_' + subj_id + '_Confederate_' + confed_id + '_task_b_results.csv'
 # Write to .csv file with participants name, subj_id, in file name
-f=open( subj_id + ' task b results.csv','w')
-f.write('Confederate: ' + confed_id + '\n')
-for i in range(1):
+f=open( outputFile,'w')
+if len(confed_id) > 0:
+    f.write('Confederate: ' + confed_id + '\n')
+f.write('Trial Type, Money Option, Item Option, Trial Options, Choice 1, Choice 1 RT, Choice 2, Choice 2 RT, PostChoice, PostChoiceRT\n')
+for i in range(2):
     # Remove filepath from imageList[i] string
-    f.write('Trial Type, Money Option, Item Option, Trial Images, Choice 1, Choice 1 RT, Choice 2, Choice 2 RT, PostChoice, PostChoiceRT\n')
     print(trials[i])
     print(monetaryOptions[i])
     print(itemNumberOptions[i])
-    print(trialImages[i])
+    print(trialOptions[i])
     print(choice1Responses[i])
     print(choice1ReactionTimes[i])
     print(choice2Responses[i])
     print(choice2ReactionTimes[i])
     print(postChoiceResponses[i])
     print(postChoiceReactionTimes[i])
-    f.write(str(trials[i]) + ',' + str(monetaryOptions[i]) + ',' + str(itemNumberOptions[i]) + ',' + " ".join(map(str,trialImages[i])) 
+    f.write(str(trials[i]) + ',' + str(monetaryOptions[i]) + ',' + str(itemNumberOptions[i]) + ',' + " ".join(map(str,trialOptions[i])) 
         + ',' + str(choice1Responses[i]) +','+ str(choice1ReactionTimes[i]) + ',' + str(choice2Responses[i]) + ',' + str(choice2ReactionTimes[i]) 
         + ',' + str(postChoiceResponses[i]) +','+ str(postChoiceReactionTimes[i]) + "\n")
 f.close()
