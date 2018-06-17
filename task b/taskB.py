@@ -314,8 +314,23 @@ option2Money12=visual.TextBox(window=win,
                          border_color=None,
                          border_stroke_width=4
                          )
+postChoiceMoney=visual.TextBox(window=win,
+                         text=' ',
+                         background_color=[1,1,1],
+                         bold=False,
+                         italic=False,
+                         font_size=21,
+                         font_color=[-1,-1,1],
+                         size=(156,156),
+                         pos=(0, 0),
+                         units='pix',
+                         grid_horz_justification='center',
+                         grid_vert_justification='center',
+                         border_color=None,
+                         border_stroke_width=4
+                         )
 
-for i in range(1):
+for i in range(2):
     if event.getKeys(['escape']):
                 core.quit()
     # Set option offered in trial randomly from lists
@@ -354,7 +369,9 @@ for i in range(1):
         option1Items.draw()
         option1ItemsShape.draw()
         win.flip()
-    
+    # Reset border colors
+    option1Money.setBorderColor(None)
+    option1Items.setBorderColor(None)
     # Check for response
     ## Exit current trial and begin new one if subject did not answer in time
     if choice1Responses[i] == '':
@@ -378,6 +395,7 @@ for i in range(1):
 
     # Choice 2
     if choice1Responses[i] == monetaryAmount:
+        
         option2Money1.setText('$' + str(monetaryAmount))
         option2Money2.setText('$' + str(monetaryAmount))
         option2Money3.setText('$' + str(monetaryAmount))
@@ -390,8 +408,288 @@ for i in range(1):
         option2Money10.setText('$' + str(monetaryAmount))
         option2Money11.setText('$' + str(monetaryAmount))
         option2Money12.setText('$' + str(monetaryAmount))
+        
+        option2Pos1Shape.setLineColor(None)
+        option2Pos2Shape.setLineColor(None)
+        option2Pos3Shape.setLineColor(None)
+        option2Pos4Shape.setLineColor(None)
+        option2Pos5Shape.setLineColor(None)
+        option2Pos6Shape.setLineColor(None)
+        option2Pos7Shape.setLineColor(None)
+        option2Pos8Shape.setLineColor(None)
+        option2Pos9Shape.setLineColor(None)
+        option2Pos10Shape.setLineColor(None)
+        option2Pos11Shape.setLineColor(None)
+        option2Pos12Shape.setLineColor(None)
+        
         timer.reset()
-        print(option1Money.getDisplayedText())
+        while timer.getTime() < 5:
+            ## item1 Chosen
+            if mouse.isPressedIn(option2Pos1Shape):
+                choice2ReactionTimes[i] = timer.getTime() ## record reaction time
+                option2Pos1Shape.setLineColor('red')
+                option2Pos1Shape.draw()
+                option2Money1.draw()
+                option2Money2.draw()
+                option2Money3.draw()
+                option2Money4.draw()
+                option2Money5.draw()
+                option2Money6.draw()
+                option2Money7.draw()
+                option2Money8.draw()
+                option2Money9.draw()
+                option2Money10.draw()
+                option2Money11.draw()
+                option2Money12.draw()
+                win.flip()
+                core.wait(1)
+                choice2Responses[i] = option2Money1.getDisplayedText()
+                break
+            elif mouse.isPressedIn(option2Pos2Shape):
+                choice2ReactionTimes[i] = timer.getTime() ## record reaction time
+                option2Pos2Shape.setLineColor('red')
+                option2Pos2Shape.draw()
+                option2Money1.draw()
+                option2Money2.draw()
+                option2Money3.draw()
+                option2Money4.draw()
+                option2Money5.draw()
+                option2Money6.draw()
+                option2Money7.draw()
+                option2Money8.draw()
+                option2Money9.draw()
+                option2Money10.draw()
+                option2Money11.draw()
+                option2Money12.draw()
+                win.flip()
+                core.wait(1)
+                choice2Responses[i] = option2Money2.getDisplayedText()
+                break
+            elif mouse.isPressedIn(option2Pos3Shape):
+                choice2ReactionTimes[i] = timer.getTime() ## record reaction time
+                option2Pos3Shape.setLineColor('red')
+                option2Pos3Shape.draw()
+                option2Money1.draw()
+                option2Money2.draw()
+                option2Money3.draw()
+                option2Money4.draw()
+                option2Money5.draw()
+                option2Money6.draw()
+                option2Money7.draw()
+                option2Money8.draw()
+                option2Money9.draw()
+                option2Money10.draw()
+                option2Money11.draw()
+                option2Money12.draw()
+                win.flip()
+                core.wait(1)
+                choice2Responses[i] = option2Money3.getDisplayedText()
+                break
+            elif mouse.isPressedIn(option2Pos4Shape):
+                choice2ReactionTimes[i] = timer.getTime() ## record reaction time
+                option2Pos4Shape.setLineColor('red')
+                option2Pos4Shape.draw()
+                option2Money1.draw()
+                option2Money2.draw()
+                option2Money3.draw()
+                option2Money4.draw()
+                option2Money5.draw()
+                option2Money6.draw()
+                option2Money7.draw()
+                option2Money8.draw()
+                option2Money9.draw()
+                option2Money10.draw()
+                option2Money11.draw()
+                option2Money12.draw()
+                win.flip()
+                core.wait(1)
+                choice2Responses[i] = option2Money4.getDisplayedText()
+                break
+            elif mouse.isPressedIn(option2Pos5Shape):
+                choice2ReactionTimes[i] = timer.getTime() ## record reaction time
+                option2Pos5Shape.setLineColor('red')
+                option2Pos5Shape.draw()
+                option2Money1.draw()
+                option2Money2.draw()
+                option2Money3.draw()
+                option2Money4.draw()
+                option2Money5.draw()
+                option2Money6.draw()
+                option2Money7.draw()
+                option2Money8.draw()
+                option2Money9.draw()
+                option2Money10.draw()
+                option2Money11.draw()
+                option2Money12.draw()
+                win.flip()
+                core.wait(1)
+                choice2Responses[i] = option2Money5.getDisplayedText()
+                break
+            elif mouse.isPressedIn(option2Pos6Shape):
+                choice2ReactionTimes[i] = timer.getTime() ## record reaction time
+                option2Pos6Shape.setLineColor('red')
+                option2Pos6Shape.draw()
+                option2Money1.draw()
+                option2Money2.draw()
+                option2Money3.draw()
+                option2Money4.draw()
+                option2Money5.draw()
+                option2Money6.draw()
+                option2Money7.draw()
+                option2Money8.draw()
+                option2Money9.draw()
+                option2Money10.draw()
+                option2Money11.draw()
+                option2Money12.draw()
+                win.flip()
+                core.wait(1)
+                choice2Responses[i] = option2Money6.getDisplayedText()
+                break
+            elif mouse.isPressedIn(option2Pos7Shape):
+                choice2ReactionTimes[i] = timer.getTime() ## record reaction time
+                option2Pos7Shape.setLineColor('red')
+                option2Pos7Shape.draw()
+                option2Money1.draw()
+                option2Money2.draw()
+                option2Money3.draw()
+                option2Money4.draw()
+                option2Money5.draw()
+                option2Money6.draw()
+                option2Money7.draw()
+                option2Money8.draw()
+                option2Money9.draw()
+                option2Money10.draw()
+                option2Money11.draw()
+                option2Money12.draw()
+                win.flip()
+                core.wait(1)
+                choice2Responses[i] = option2Money7.getDisplayedText()
+                break
+            elif mouse.isPressedIn(option2Pos8Shape):
+                choice2ReactionTimes[i] =  timer.getTime() ## record reaction time
+                option2Pos8Shape.setLineColor('red')
+                option2Pos8Shape.draw()
+                option2Money1.draw()
+                option2Money2.draw()
+                option2Money3.draw()
+                option2Money4.draw()
+                option2Money5.draw()
+                option2Money6.draw()
+                option2Money7.draw()
+                option2Money8.draw()
+                option2Money9.draw()
+                option2Money10.draw()
+                option2Money11.draw()
+                option2Money12.draw()
+                win.flip()
+                core.wait(1)
+                choice2Responses[i] = option2Money8.getDisplayedText()
+                break
+            elif mouse.isPressedIn(option2Pos9Shape):
+                choice2ReactionTimes[i] = timer.getTime() ## record reaction time
+                option2Pos9Shape.setLineColor('red')
+                option2Pos9Shape.draw()
+                option2Money1.draw()
+                option2Money2.draw()
+                option2Money3.draw()
+                option2Money4.draw()
+                option2Money5.draw()
+                option2Money6.draw()
+                option2Money7.draw()
+                option2Money8.draw()
+                option2Money9.draw()
+                option2Money10.draw()
+                option2Money11.draw()
+                option2Money12.draw()
+                win.flip()
+                core.wait(1)
+                choice2Responses[i] = option2Money9.getDisplayedText()
+                break
+            elif mouse.isPressedIn(option2Pos10Shape):
+                choice2ReactionTimes[i] = timer.getTime() ## record reaction time
+                option2Pos10Shape.setLineColor('red')
+                option2Pos10Shape.draw()
+                option2Money1.draw()
+                option2Money2.draw()
+                option2Money3.draw()
+                option2Money4.draw()
+                option2Money5.draw()
+                option2Money6.draw()
+                option2Money7.draw()
+                option2Money8.draw()
+                option2Money9.draw()
+                option2Money10.draw()
+                option2Money11.draw()
+                option2Money12.draw()
+                win.flip()
+                core.wait(1)
+                choice2Responses[i] = option2Money10.getDisplayedText()
+                break
+            elif mouse.isPressedIn(option2Pos11Shape):
+                choice2ReactionTimes[i] = timer.getTime() ## record reaction time 
+                option2Pos11Shape.setLineColor('red')
+                option2Pos11Shape.draw()
+                option2Money1.draw()
+                option2Money2.draw()
+                option2Money3.draw()
+                option2Money4.draw()
+                option2Money5.draw()
+                option2Money6.draw()
+                option2Money7.draw()
+                option2Money8.draw()
+                option2Money9.draw()
+                option2Money10.draw()
+                option2Money11.draw()
+                option2Money12.draw()
+                win.flip()
+                core.wait(1)
+                choice2Responses[i] = option2Money11.getDisplayedText()
+                break
+            elif mouse.isPressedIn(option2Pos12Shape):
+                choice2ReactionTimes[i] = timer.getTime() ## record reaction time
+                option2Pos12Shape.setLineColor('red')
+                option2Pos12Shape.draw()
+                option2Money1.draw()
+                option2Money2.draw()
+                option2Money3.draw()
+                option2Money4.draw()
+                option2Money5.draw()
+                option2Money6.draw()
+                option2Money7.draw()
+                option2Money8.draw()
+                option2Money9.draw()
+                option2Money10.draw()
+                option2Money11.draw()
+                option2Money12.draw()
+                win.flip()
+                core.wait(1)
+                choice2Responses[i] = option2Money12.getDisplayedText()
+                break
+            option2Money1.draw()
+            option2Money2.draw()
+            option2Money3.draw()
+            option2Money4.draw()
+            option2Money5.draw()
+            option2Money6.draw()
+            option2Money7.draw()
+            option2Money8.draw()
+            option2Money9.draw()
+            option2Money10.draw()
+            option2Money11.draw()
+            option2Money12.draw()
+            option2Pos1Shape.draw()
+            option2Pos2Shape.draw()
+            option2Pos3Shape.draw()
+            option2Pos4Shape.draw()
+            option2Pos5Shape.draw()
+            option2Pos6Shape.draw()
+            option2Pos7Shape.draw()
+            option2Pos8Shape.draw()
+            option2Pos9Shape.draw()
+            option2Pos10Shape.draw()
+            option2Pos11Shape.draw()
+            option2Pos12Shape.draw()
+            win.flip()
     # Subject chose item option
     else:  
         # Setup random images to be used based on amount unique images to be shown
@@ -407,6 +705,19 @@ for i in range(1):
         trialImages[i] = uniquePics
         trialPics = uniquePics * timesImageRepeated
         random.shuffle(trialPics)
+        
+        option2Pos1Shape.setLineColor('red')
+        option2Pos2Shape.setLineColor('red')
+        option2Pos3Shape.setLineColor('red')
+        option2Pos4Shape.setLineColor('red')
+        option2Pos5Shape.setLineColor('red')
+        option2Pos6Shape.setLineColor('red')
+        option2Pos7Shape.setLineColor('red')
+        option2Pos8Shape.setLineColor('red')
+        option2Pos9Shape.setLineColor('red')
+        option2Pos10Shape.setLineColor('red')
+        option2Pos11Shape.setLineColor('red')
+        option2Pos12Shape.setLineColor('red')
         
         option2Item1.setImage(trialPics[0])
         option2Item2.setImage(trialPics[1])
@@ -689,17 +1000,24 @@ for i in range(1):
 
     # Show Subject's choice
     timer.reset()
-    while timer.getTime() < 2:
-        postChoiceItem.setImage(choice2Responses[i])
-        postChoiceItem.draw()
-        win.flip()
-        core.wait(3)
+    if choice1Responses[i] == monetaryAmount:
+        while timer.getTime() < 2:
+            postChoiceMoney.setText(choice2Responses[i])
+            postChoiceMoney.draw()
+            win.flip()
+            core.wait(3)
+    else: 
+        while timer.getTime() < 2:
+            postChoiceItem.setImage(choice2Responses[i])
+            postChoiceItem.draw()
+            win.flip()
+            core.wait(3)
     
     satisfactionScale.reset(); 
     event.clearEvents()
     timer.reset()
     while timer.getTime() < 5:
-        if not preferenceScale.noResponse:
+        if not satisfactionScale.noResponse:
             postChoiceReactionTimes[i] = timer.getTime()
             postChoiceResponses[i] = satisfactionScale.getRating()
             satisfactionScale.draw()
@@ -707,7 +1025,7 @@ for i in range(1):
             core.wait(1)
             break
         # assigns response to corresponding image
-        preferenceScale.draw()
+        satisfactionScale.draw()
         win.flip()
     
     if postChoiceResponses[i] == '':
