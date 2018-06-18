@@ -2,19 +2,43 @@ from psychopy import visual, event, core, os
 import random
 import glob, util
 
-# Initialization # taskB(subj_id, confed_id,
-subj_id = 'Test'
-confed_id = '' # Leave as '' to indicate no confederate 
+# Task B for set Size Study
+# Matthew Slipenchuk tuf91673@temple.edu (06/2018)
+
+# Input: 
+# subject's task a results 
+# -ex: 'name_task_a_results.csv'
+# Output:
+# .csv file containing subjects results
+# -file name indicates if subject is answering for themselves or confederate.
+# -'subject_name_task_b_results.csv' contains 90 Trials and
+# -'subject_name_confederate_name2_task_b_results.csv' contains 90 trials.
+
+# Parameters
+subj_id = 'Test' # 
+confed_id = '' # Leave as '' to indicate no confederate
+choice1Duration = 4
+choice2Duration = 4
+tryFasterDuration = 3
+delay1Duration = 5
+choice2Duration = 5
+delay2Duration = 2
+postChoiceDuration = 2
+satisfactionScaleDuration = 4 
+interTrialInterval = 1 # Duration in between trials
+
 directory = os.getcwd()
-imageList = util.imageSorter('Matt2 task a results.csv') # Place subject's task a results here
-timer = core.Clock()
+imageList = util.imageSorter('Matt2 task a results.csv') # Place input, subject's task a results here.
+
+# Initalization
+timer = core.Clock() 
 win = visual.Window(fullscr=True, units='pix', monitor='testMonitor',
         color = [-.9,-.9,-.9])
 mouse = event.Mouse()
-d = 20;
+d = 20; ## distance between ui elements
 
 ## Trials. 45 presenting high pref images, and 45 presenting low pref images.
-## 1 = high pref, 2 = low pref, trial order is randomized.
+## 1 = high preference, 2 = low preference, trial order is randomized.
 itemChoiceAmounts = [2,3,4,6,12]
 monetaryChoiceAmounts = [0.50, 0.75, 1.00, 1.25, 1.50]
 highPrefTrials = [1] * 45
@@ -22,7 +46,7 @@ lowPrefTrials = [2] * 45
 trials = highPrefTrials + lowPrefTrials
 random.shuffle(trials)
 
-# Lists holding responses and reaction times for each trial
+## Lists holding responses and reaction times for each trial
 monetaryOptions = [''] * len(trials)
 itemNumberOptions = [''] * len(trials)
 choice1Responses = [''] * len(trials)
@@ -33,13 +57,15 @@ postChoiceResponses = [''] * len(trials)
 postChoiceReactionTimes = [''] * len(trials)
 trialOptions = [''] * len(trials)
 
-# Rating Scale
+## Post choice satisfaction Rating Scale
 satisfactionScale = visual.RatingScale(win, name='satisfaction',
         choices=['1', '2', '3', '4', '5', '6', '7'], pos=[0,0])
 
+## 1st choice per trial
+## Reinitialized every trial to hold the trials randomly selected choices
 monetaryAmount = 0
 choiceAmount = 0
-## Textboxes
+## Textboxes for choice 1 
 option1Money=visual.TextBox(window=win,
                          text=' ',
                          background_color=[1,1,1],
@@ -71,16 +97,14 @@ option1Items=visual.TextBox(window=win,
                          border_stroke_width=4
                          )
 
-# Target Boxes 
+## Target Boxes 
 ##  Overlaying these on the textbox stim because visual textboxs do not
 ##  have the .isPressedIn() method.
-
 ## First choice
 option1MoneyShape = visual.ShapeStim(win, fillColor=[1,1,1], 
     vertices=[(-(d/2 + 156), -156/2), (-(d/2 + 156), 156/2), (-d/2, 156/2), (-d/2, -156/2)], opacity = 0)
 option1ItemsShape = visual.ShapeStim(win, fillColor=[1,1,1],
     vertices=[((d/2 + 156), -156/2), ((d/2 + 156), 156/2), (d/2, 156/2), (d/2, -156/2)], opacity = 0)
-
 ## Second choice
 ## Top - left to right
 option2Pos1Shape = visual.ShapeStim(win, fillColor= None, lineWidth=4, lineColor='red', lineColorSpace='rgb', 
@@ -111,11 +135,11 @@ option2Pos12Shape = visual.ShapeStim(win, fillColor= None, lineWidth=4, lineColo
     vertices=[((d/2 + 160+d), -(d+160/2+160)), ((d/2 + 160+d), -(d+160/2)), ((d/2 + 160+d+160), -(d+160/2)), ((d/2 + 160+d+160), -(d+160/2+160))])
 
 ## Coordinates for ImageStims, origin = (0,0)
-xInner = (d/2 + 160/2)
+xInner = (d/2 + 160/2) 
 xOuter = (d/2 + 160 + d + 160/2)
 y = (160/2 + d + 160/2)
 
-# ImageStim - initialized with placeholder images
+## ImageStim - Initialized with placeholder images
 ## Top - left to right
 option2Item1 = visual.ImageStim(win=win, image=imageList[0][0], units='pix', pos=[-(xOuter), (y)], size = [156,156])
 option2Item2 = visual.ImageStim(win=win, image=imageList[0][0], units='pix', pos=[-(xInner), (y)], size = [156,156])
@@ -134,6 +158,7 @@ option2Item12 = visual.ImageStim(win=win, image=imageList[0][0], units='pix', po
 ## Subejct's selected image
 postChoiceItem = visual.ImageStim(win=win, image=imageList[0][0], units='pix', pos=[0,0], size = [156,156])
 
+## TextBox - Initialized with placeholder values
 option2Money1=visual.TextBox(window=win,
                          text=' ',
                          background_color=[1,1,1],
@@ -330,6 +355,7 @@ postChoiceMoney=visual.TextBox(window=win,
                          border_stroke_width=4
                          )
 
+# Main Loop
 for i in range(90):
     if event.getKeys(['escape']):
                 core.quit()
@@ -338,20 +364,20 @@ for i in range(90):
     choiceAmount = itemChoiceAmounts[random.randint(0, len(itemChoiceAmounts) - 1)]
     option1Money.setText('$' + str(monetaryAmount))
     option1Items.setText(str(choiceAmount))
-    monetaryOptions[i] = monetaryAmount
-    itemNumberOptions[i] = choiceAmount
+    monetaryOptions[i] = monetaryAmount # assign option offered to output file array for printing
+    itemNumberOptions[i] = choiceAmount # ^
     # Choice 1 Loop
     timer.reset()
-    while timer.getTime() < 4:
+    while timer.getTime() < choice1Duration: 
         ## Monetary Option Chosen
         if mouse.isPressedIn(option1MoneyShape):
-            choice1ReactionTimes[i] = timer.getTime()
+            choice1ReactionTimes[i] = timer.getTime() # assign reation time
             option1Money.setBorderColor('red')
             option1Money.draw()
             option1Items.draw()
             win.flip()
-            core.wait(1)
-            choice1Responses[i] = monetaryAmount
+            core.wait(1) # Duration of Red outline of subject's selected boxsss
+            choice1Responses[i] = monetaryAmount # assign subject's first choice
             break
         ## Choice option Chosen
         elif mouse.isPressedIn(option1ItemsShape):
@@ -368,12 +394,13 @@ for i in range(90):
         option1Items.draw()
         option1ItemsShape.draw()
         win.flip()
-    # Reset border colors
+    # Reset choice 1 border colors
     option1Money.setBorderColor(None)
     option1Items.setBorderColor(None)
-    # Check for response
+    # Check if subject has not responded
     ## Exit current trial and begin new one if subject did not answer in time
     if choice1Responses[i] == '':
+        ## Set all values to None
         choice1Responses[i] = 'None'
         choice1ReactionTimes[i] ='None'
         choice2Responses[i] = 'None'
@@ -385,16 +412,17 @@ for i in range(90):
         event.clearEvents()
         try_faster_screen.draw()
         win.flip()
-        core.wait(3)
-        continue # Jumps to start of for loop, begins a new trial
+        core.wait(tryFasterDuration) # Duration of try faster screen
+        continue # Jumps to start of trials for loop, begins a new trial
 
-    # Delay 1. Select 5 or 6 second delay
-    while timer.getTime() < 5:
+    # Delay 1 JOCN used 5 or 6 second delay
+    while timer.getTime() < delay1Duration:
         win.flip()
 
     # Choice 2
     if choice1Responses[i] == monetaryAmount:
         
+        # Set values of money choices
         option2Money1.setText('$' + str(monetaryAmount))
         option2Money2.setText('$' + str(monetaryAmount))
         option2Money3.setText('$' + str(monetaryAmount))
@@ -408,6 +436,7 @@ for i in range(90):
         option2Money11.setText('$' + str(monetaryAmount))
         option2Money12.setText('$' + str(monetaryAmount))
         
+        # Reset color of ui borders, clear before selection
         option2Pos1Shape.setLineColor(None)
         option2Pos2Shape.setLineColor(None)
         option2Pos3Shape.setLineColor(None)
@@ -421,8 +450,8 @@ for i in range(90):
         option2Pos11Shape.setLineColor(None)
         option2Pos12Shape.setLineColor(None)
         
-        timer.reset()
-        while timer.getTime() < 5:
+        timer.reset() 
+        while timer.getTime() < choice2Duration: 
             ## item1 Chosen
             if mouse.isPressedIn(option2Pos1Shape):
                 choice2ReactionTimes[i] = timer.getTime() ## record reaction time
@@ -733,7 +762,7 @@ for i in range(90):
         option2Item12.setImage(trialPics[11])
         
         timer.reset()
-        while timer.getTime() < 5:
+        while timer.getTime() < choice2Duration:
             ## item1 Chosen
             if mouse.isPressedIn(option2Item1):
                 choice2ReactionTimes[i] = timer.getTime() ## record reaction time
@@ -994,20 +1023,20 @@ for i in range(90):
 
     # Delay 2. Select 2 or 3 second delay
     timer.reset()
-    while timer.getTime() < 3:
+    while timer.getTime() < delay2Duration:
         # print(timer.getTime())
         win.flip()
 
     # Show Subject's choice
     timer.reset()
     if choice1Responses[i] == monetaryAmount:
-        while timer.getTime() < 2: # JOCN duration: 2 seconds
+        while timer.getTime() < postChoiceDuration: # JOCN duration: 2 seconds
             postChoiceMoney.setText(choice2Responses[i])
             postChoiceMoney.draw()
             win.flip()
-            core.wait(3)
+            core.wait(3) # 
     else: 
-        while timer.getTime() < 2:
+        while timer.getTime() < postChoiceDuration:
             postChoiceItem.setImage(choice2Responses[i])
             postChoiceItem.draw()
             win.flip()
@@ -1016,13 +1045,13 @@ for i in range(90):
     satisfactionScale.reset(); 
     event.clearEvents()
     timer.reset()
-    while timer.getTime() < 3: # JOCN duration: 3 seconds
+    while timer.getTime() < satisfactionScaleDuration: # JOCN duration: 3 seconds
         if not satisfactionScale.noResponse:
             postChoiceReactionTimes[i] = timer.getTime()
             postChoiceResponses[i] = satisfactionScale.getRating()
             satisfactionScale.draw()
             win.flip()
-            core.wait(1)
+            core.wait(interTrialInterval)
             break
         # assigns response to corresponding image
         satisfactionScale.draw()
@@ -1038,18 +1067,21 @@ for i in range(90):
         win.flip()
         core.wait(3)
 
-# Display rating scale and store result as resp3.
-# Put this in a for trial in trials loop.
+# Determine output file name.
 if confed_id == '':
     outputFile = 'Subject_' + subj_id + '_task_b_results.csv'
 else: 
     outputFile = 'Subject_' + subj_id + '_Confederate_' + confed_id + '_task_b_results.csv'
-# Write to .csv file with participants name, subj_id, in file name
+    
+# Write to .csv file with participants name, subj_id, in file name and confederate's id, confed_id, if needed
 f=open( outputFile,'w')
-if len(confed_id) > 0:
-    f.write('Confederate: ' + confed_id + '\n')
+if len(confed_id) > 0: # Check if there is a confederate
+    f.write('Subject: ' + subj_id + ',' + 'Confederate: ' + confed_id + '\n') 
 f.write('Trial Type, Money Option, Item Option, Trial Options, Choice 1, Choice 1 RT, Choice 2, Choice 2 RT, PostChoice, PostChoiceRT\n')
 for i in range(90):
+    f.write(str(trials[i]) + ',' + str(monetaryOptions[i]) + ',' + str(itemNumberOptions[i]) + ',' + " ".join(map(str,trialOptions[i])) 
+        + ',' + str(choice1Responses[i]) +','+ str(choice1ReactionTimes[i]) + ',' + str(choice2Responses[i]) + ',' + str(choice2ReactionTimes[i]) 
+        + ',' + str(postChoiceResponses[i]) +','+ str(postChoiceReactionTimes[i]) + "\n")
     print(trials[i])
     print(monetaryOptions[i])
     print(itemNumberOptions[i])
@@ -1060,9 +1092,6 @@ for i in range(90):
     print(choice2ReactionTimes[i])
     print(postChoiceResponses[i])
     print(postChoiceReactionTimes[i])
-    f.write(str(trials[i]) + ',' + str(monetaryOptions[i]) + ',' + str(itemNumberOptions[i]) + ',' + " ".join(map(str,trialOptions[i])) 
-        + ',' + str(choice1Responses[i]) +','+ str(choice1ReactionTimes[i]) + ',' + str(choice2Responses[i]) + ',' + str(choice2ReactionTimes[i]) 
-        + ',' + str(postChoiceResponses[i]) +','+ str(postChoiceReactionTimes[i]) + "\n")
 f.close()
 
 win.close()
