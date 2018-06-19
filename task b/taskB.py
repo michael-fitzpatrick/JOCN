@@ -1,6 +1,5 @@
 from psychopy import visual, event, core, os
-import random
-import glob, util
+import random, glob, util
 
 # Task B for set Size Study
 # Matthew Slipenchuk tuf91673@temple.edu (06/2018)
@@ -27,20 +26,20 @@ postChoiceDuration = 2
 satisfactionScaleDuration = 4 
 interTrialInterval = 1 # Duration in between trials
 
+# Initalization
 directory = os.getcwd()
 imageList = util.imageSorter('Matt2 task a results.csv') # Place input, subject's task a results here.
-
-# Initalization
 timer = core.Clock() 
 win = visual.Window(fullscr=True, units='pix', monitor='testMonitor',
         color = [-.9,-.9,-.9])
 mouse = event.Mouse()
 d = 20; ## distance between ui elements
 
-## Trials. 45 presenting high pref images, and 45 presenting low pref images.
+## Trials: 45 presenting high pref images, and 45 presenting low pref images.
 ## 1 = high preference, 2 = low preference, trial order is randomized.
 itemChoiceAmounts = [2,3,4,6,12]
-monetaryChoiceAmounts = [0.50, 0.75, 1.00, 1.25, 1.50]
+moneyChoiceAmounts = [2,3,4,6]
+moneyList = [0.50, 0.75, 1.00, 1.25, 1.50, 1.75]
 highPrefTrials = [1] * 45
 lowPrefTrials = [2] * 45
 trials = highPrefTrials + lowPrefTrials
@@ -155,7 +154,7 @@ option2Item9 = visual.ImageStim(win=win, image=imageList[0][0], units='pix', pos
 option2Item10 = visual.ImageStim(win=win, image=imageList[0][0], units='pix', pos=[-(xInner), -(y)], size = [156,156])
 option2Item11 = visual.ImageStim(win=win, image=imageList[0][0], units='pix', pos=[(xInner), -(y)], size = [156,156])
 option2Item12 = visual.ImageStim(win=win, image=imageList[0][0], units='pix', pos=[(xOuter), -(y)], size = [156,156])
-## Subejct's selected image
+## Subejct's selected image;.
 postChoiceItem = visual.ImageStim(win=win, image=imageList[0][0], units='pix', pos=[0,0], size = [156,156])
 
 ## TextBox - Initialized with placeholder values
@@ -357,29 +356,36 @@ postChoiceMoney=visual.TextBox(window=win,
 
 # Main Loop
 for i in range(90):
-    if event.getKeys(['escape']):
-                core.quit()
-    # Set option offered in trial randomly from lists
-    monetaryAmount = monetaryChoiceAmounts[random.randint(0, len(monetaryChoiceAmounts) - 1)]
-    choiceAmount = itemChoiceAmounts[random.randint(0, len(itemChoiceAmounts) - 1)]
-    option1Money.setText('$' + str(monetaryAmount))
+    # Set up all money options to be offered
+    numberUniqueMoneyOptions = moneyChoiceAmounts[random.randint(0, len(moneyChoiceAmounts)-1)]
+    timesMoneyRepeated = 12 / numberUniqueMoneyOptions
+    uniqueMoneyOptions = random.sample(moneyList, numberUniqueMoneyOptions)
+
+    # Create random ordered repeated unique trial pics
+    trialMoneyOptions = uniqueMoneyOptions * timesMoneyRepeated
+    random.shuffle(trialMoneyOptions)
+    
+    # Assign choice 1 textboxes values created above
+    monetaryAmount = trialMoneyOptions[0] ## money option displayed in choice 1
+    choiceAmount = itemChoiceAmounts[random.randint(0, len(itemChoiceAmounts) - 1)] ## item choice amount displayed in choice 1
+    option1Money.setText('$' + str(monetaryAmount)) 
     option1Items.setText(str(choiceAmount))
-    monetaryOptions[i] = monetaryAmount # assign option offered to output file array for printing
+    trialMoneyOptions[i] = monetaryAmount # log option offered for output
     itemNumberOptions[i] = choiceAmount # ^
     # Choice 1 Loop
     timer.reset()
     while timer.getTime() < choice1Duration: 
-        ## Monetary Option Chosen
+        # Monetary Option Chosen
         if mouse.isPressedIn(option1MoneyShape):
-            choice1ReactionTimes[i] = timer.getTime() # assign reation time
+            choice1ReactionTimes[i] = timer.getTime() ## assign reation time
             option1Money.setBorderColor('red')
             option1Money.draw()
             option1Items.draw()
             win.flip()
-            core.wait(1) # Duration of Red outline of subject's selected boxsss
-            choice1Responses[i] = monetaryAmount # assign subject's first choice
+            core.wait(1) ## Duration of Red outline of subject's selected boxsss
+            choice1Responses[i] = monetaryAmount ## assign subject's first choice
             break
-        ## Choice option Chosen
+        # Choice option Chosen
         elif mouse.isPressedIn(option1ItemsShape):
             choice1ReactionTimes[i] = timer.getTime()
             option1Items.setBorderColor('red')
@@ -421,21 +427,18 @@ for i in range(90):
 
     # Choice 2
     if choice1Responses[i] == monetaryAmount:
-        
-        # Set values of money choices
-        option2Money1.setText('$' + str(monetaryAmount))
-        option2Money2.setText('$' + str(monetaryAmount))
-        option2Money3.setText('$' + str(monetaryAmount))
-        option2Money4.setText('$' + str(monetaryAmount))
-        option2Money5.setText('$' + str(monetaryAmount))
-        option2Money6.setText('$' + str(monetaryAmount))
-        option2Money7.setText('$' + str(monetaryAmount))
-        option2Money8.setText('$' + str(monetaryAmount))
-        option2Money9.setText('$' + str(monetaryAmount))
-        option2Money10.setText('$' + str(monetaryAmount))
-        option2Money11.setText('$' + str(monetaryAmount))
-        option2Money12.setText('$' + str(monetaryAmount))
-        
+        option2Money1.setText('$' + str(trialMoneyOptions[0]))
+        option2Money2.setText('$' + str(trialMoneyOptions[1]))
+        option2Money3.setText('$' + str(trialMoneyOptions[2]))
+        option2Money4.setText('$' + str(trialMoneyOptions[3]))
+        option2Money5.setText('$' + str(trialMoneyOptions[4]))
+        option2Money6.setText('$' + str(trialMoneyOptions[5]))
+        option2Money7.setText('$' + str(trialMoneyOptions[6]))
+        option2Money8.setText('$' + str(trialMoneyOptions[7]))
+        option2Money9.setText('$' + str(trialMoneyOptions[8]))
+        option2Money10.setText('$' + str(trialMoneyOptions[9]))
+        option2Money11.setText('$' + str(trialMoneyOptions[10]))
+        option2Money12.setText('$' + str(trialMoneyOptions[11]))
         # Reset color of ui borders, clear before selection
         option2Pos1Shape.setLineColor(None)
         option2Pos2Shape.setLineColor(None)
@@ -718,20 +721,20 @@ for i in range(90):
             option2Pos11Shape.draw()
             option2Pos12Shape.draw()
             win.flip()
-        trialOptions[i] = '$' + str(monetaryAmount)
     # Subject chose item option
     else:  
         # Setup random images to be used based on amount unique images to be shown
         imageType = random.randint(0, 1)
         numberUniquePics = choiceAmount
         timesImageRepeated = 12 / numberUniquePics
-
+        # Check for trial type, 1 or 2, and require images in list than unique pics needed.
         if trials[i] == 1 and numberUniquePics < imageList[imageType]: # Check if trial requires high preference images
             uniquePics = random.sample(imageList[imageType], numberUniquePics) 
         else: # Select low preference images
             uniquePics = random.sample(imageList[imageType + 2], numberUniquePics) 
-        
+        # Assign picture options to trial options array for output
         trialOptions[i] = uniquePics
+        # Create random ordered repeated unique trial pics
         trialPics = uniquePics * timesImageRepeated
         random.shuffle(trialPics)
         
@@ -1066,15 +1069,26 @@ for i in range(90):
         try_faster_screen.draw()
         win.flip()
         core.wait(3)
+    # See Results
+    print(trials[i])
+    print(monetaryOptions[i])
+    print(itemNumberOptions[i])
+    print(trialOptions[i])
+    print(choice1Responses[i])
+    print(choice1ReactionTimes[i])
+    print(choice2Responses[i])
+    print(choice2ReactionTimes[i])
+    print(postChoiceResponses[i])
+    print(postChoiceReactionTimes[i])
 
-# Determine output file name.
+# Determine output file name
 if confed_id == '':
     outputFile = 'Subject_' + subj_id + '_task_b_results.csv'
 else: 
     outputFile = 'Subject_' + subj_id + '_Confederate_' + confed_id + '_task_b_results.csv'
     
-# Write to .csv file with participants name, subj_id, in file name and confederate's id, confed_id, if needed
-f=open( outputFile,'w')
+# Write to .csv file with participants name, subj_id, in file name and/or confederate's id, confed_id
+f=open( outputFile ,'w')
 if len(confed_id) > 0: # Check if there is a confederate
     f.write('Subject: ' + subj_id + ',' + 'Confederate: ' + confed_id + '\n') 
 f.write('Trial Type, Money Option, Item Option, Trial Options, Choice 1, Choice 1 RT, Choice 2, Choice 2 RT, PostChoice, PostChoiceRT\n')
@@ -1082,6 +1096,7 @@ for i in range(90):
     f.write(str(trials[i]) + ',' + str(monetaryOptions[i]) + ',' + str(itemNumberOptions[i]) + ',' + " ".join(map(str,trialOptions[i])) 
         + ',' + str(choice1Responses[i]) +','+ str(choice1ReactionTimes[i]) + ',' + str(choice2Responses[i]) + ',' + str(choice2ReactionTimes[i]) 
         + ',' + str(postChoiceResponses[i]) +','+ str(postChoiceReactionTimes[i]) + "\n")
+    # Check results in console
     print(trials[i])
     print(monetaryOptions[i])
     print(itemNumberOptions[i])
