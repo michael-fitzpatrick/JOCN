@@ -14,7 +14,7 @@ import random, glob, util
 # -'subject_name_confederate_name2_task_b_results.csv' contains 90 trials.
 
 # Parameters
-subj_id = 'Test' # 
+subj_id = 'Test5' # 
 confed_id = '' # Leave as '' to indicate no confederate
 choice1Duration = 4
 choice2Duration = 4
@@ -60,7 +60,7 @@ trialOptions = [''] * len(trials)
 satisfactionScale = visual.RatingScale(win, name='satisfaction',
         choices=['1', '2', '3', '4', '5', '6', '7'], pos=[0,0])
 
-## 1st choice per trial
+## 1st choice per trial, to be stored in moneytaryOptions[] and itemNumberOptions[] respectively
 ## Reinitialized every trial to hold the trials randomly selected choices
 monetaryAmount = 0
 choiceAmount = 0
@@ -355,7 +355,7 @@ postChoiceMoney=visual.TextBox(window=win,
                          )
 
 # Main Loop
-for i in range(90):
+for i in range(2):
     # Set up all money options to be offered
     numberUniqueMoneyOptions = moneyChoiceAmounts[random.randint(0, len(moneyChoiceAmounts)-1)]
     timesMoneyRepeated = 12 / numberUniqueMoneyOptions
@@ -370,7 +370,7 @@ for i in range(90):
     choiceAmount = itemChoiceAmounts[random.randint(0, len(itemChoiceAmounts) - 1)] ## item choice amount displayed in choice 1
     option1Money.setText('$' + str(monetaryAmount)) 
     option1Items.setText(str(choiceAmount))
-    trialMoneyOptions[i] = monetaryAmount # log option offered for output
+    monetaryOptions[i] = monetaryAmount # log option offered for output
     itemNumberOptions[i] = choiceAmount # ^
     # Choice 1 Loop
     timer.reset()
@@ -427,6 +427,9 @@ for i in range(90):
 
     # Choice 2
     if choice1Responses[i] == monetaryAmount:
+        # Set trialOptions
+        trialOptions[i] = uniqueMoneyOptions
+        # Set values in the visual stim grid
         option2Money1.setText('$' + str(trialMoneyOptions[0]))
         option2Money2.setText('$' + str(trialMoneyOptions[1]))
         option2Money3.setText('$' + str(trialMoneyOptions[2]))
@@ -1101,6 +1104,7 @@ for i in range(90):
     print(monetaryOptions[i])
     print(itemNumberOptions[i])
     print(trialOptions[i])
+    print(choice1Responses[i])
     print(choice1Responses[i])
     print(choice1ReactionTimes[i])
     print(choice2Responses[i])
