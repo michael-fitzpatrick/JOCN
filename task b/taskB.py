@@ -1,7 +1,7 @@
 from psychopy import visual, event, core, os
 import random, glob, util
 
-# Task B for set Size Study
+# Task B for Set Size Study
 # Matthew Slipenchuk tuf91673@temple.edu (06/2018)
 
 # Input: 
