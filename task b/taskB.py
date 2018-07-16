@@ -14,7 +14,7 @@ import random, glob, util
 # -'subject_name_confederate_name2_task_b_results.csv' contains 90 trials.
 
 # Parameters
-subj_id = 'Test5' # 
+subj_id = 'name here' # ex: 01, 02, ...
 confed_id = '' # Leave as '' to indicate no confederate
 choice1Duration = 4
 choice2Duration = 4
@@ -28,7 +28,7 @@ interTrialInterval = 1 # Duration in between trials
 
 # Initalization
 directory = os.getcwd()
-imageList = util.imageSorter('Matt2 task a results.csv') # Place input, subject's task a results here.
+imageList = util.imageSorter('(Subject ID here) task a results.csv') # Place input, subject's task a results here.
 timer = core.Clock() 
 win = visual.Window(fullscr=True, units='pix', monitor='testMonitor',
         color = [-.9,-.9,-.9])
