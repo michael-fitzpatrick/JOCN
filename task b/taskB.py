@@ -355,7 +355,7 @@ postChoiceMoney=visual.TextBox(window=win,
                          )
 
 # Main Loop
-for i in range(2):
+for i in range(90):
     # Set up all money options to be offered
     numberUniqueMoneyOptions = moneyChoiceAmounts[random.randint(0, len(moneyChoiceAmounts)-1)]
     timesMoneyRepeated = 12 / numberUniqueMoneyOptions
